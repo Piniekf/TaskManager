@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
@@ -54,6 +55,7 @@
                                 placeholder="Enter first name"
                                 th:field="*{firstName}"
                                 type="text"
+                                required
                         />
                         <p th:errors = "*{firstName}" class="text-danger"
                            th:if="${#fields.hasErrors('firstName')}"></p>
@@ -68,6 +70,7 @@
                                 placeholder="Enter last name"
                                 th:field="*{lastName}"
                                 type="text"
+                                required
                         />
                         <p th:errors = "*{lastName}" class="text-danger"
                            th:if="${#fields.hasErrors('lastName')}"></p>
@@ -82,6 +85,7 @@
                                 placeholder="Enter email address"
                                 th:field="*{email}"
                                 type="email"
+                                required
                         />
                         <p th:errors = "*{email}" class="text-danger"
                            th:if="${#fields.hasErrors('email')}"></p>
@@ -96,6 +100,7 @@
                                 placeholder="Enter password"
                                 th:field="*{password}"
                                 type="password"
+                                required
                         />
                         <p th:errors = "*{password}" class="text-danger"
                            th:if="${#fields.hasErrors('password')}"></p>
@@ -107,6 +112,94 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/register_style.css">
+    <title>Rejestracja w TaskManager</title>
+</head>
+<body>
+<div class="register-container">
+    <img src="/png/logo-2.png" alt="Logo TaskManager" class="logo">
+
+    <div th:if="${param.success}">
+        <div class="logout">
+            You have successfully registered our app!
+        </div>
+    </div>
+    <form
+            method="post"
+            role="form"
+            th:action="@{/register/save}"
+            th:object="${user}"
+    >
+        <div>
+            <input
+                    class="register-input"
+                    id="firstName"
+                    name="firstName"
+                    placeholder="Enter first name"
+                    th:field="*{firstName}"
+                    type="text"
+                    required
+            />
+            <p th:errors = "*{firstName}" class="error-message"
+               th:if="${#fields.hasErrors('firstName')}"></p>
+        </div>
+        <div>
+            <input
+                    class="register-input"
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Enter last name"
+                    th:field="*{lastName}"
+                    type="text"
+                    required
+            />
+            <p th:errors = "*{lastName}" class="error-message"
+               th:if="${#fields.hasErrors('lastName')}"></p>
+        </div>
+        <div>
+            <input
+                    class="register-input"
+                    id="email"
+                    name="email"
+                    placeholder="Enter email address"
+                    th:field="*{email}"
+                    type="email"
+                    required
+            />
+            <p th:errors = "*{email}" class="error-message"
+               th:if="${#fields.hasErrors('email')}"></p>
+        </div>
+        <div>
+            <input
+                    class="register-input"
+                    id="password"
+                    name="password"
+                    placeholder="Enter password"
+                    th:field="*{password}"
+                    type="password"
+                    required
+            />
+            <p th:errors = "*{password}" class="error-message"
+               th:if="${#fields.hasErrors('password')}"></p>
+        </div>
+        <button type="submit" class="register-button">Zarejestruj się</button>
+    </form>
+
+
+    <div class="bottom-link">
+        <a th:href="@{/login}">Masz już konto? Zaloguj się</a>
     </div>
 </div>
 </body>
