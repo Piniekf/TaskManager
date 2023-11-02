@@ -17,8 +17,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SpringSecurity {
 
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    public SpringSecurity(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -40,7 +43,7 @@ public class SpringSecurity {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users")
+                                .defaultSuccessUrl("/users", true)
                                 .permitAll()
                 ).logout(
                         logout -> logout
