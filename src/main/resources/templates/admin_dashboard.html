@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Admin Dashboard</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin"
+                aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarAdmin">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/admin/tasks}">All Tasks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/users}">All Users</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+    <h2>Welcome, Admin!</h2>
+
+    <!-- Sekcja z listą zadań -->
+    <h3>List of Tasks</h3>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Task Name</th>
+            <th>Completed</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.taskName}"></td>
+            <td th:text="${task.completed ? 'Yes' : 'No'}"></td>
+            <td>
+                <a th:href="@{/admin/tasks/edit/{id}(id=${task.id})}" class="btn btn-warning">Edit</a>
+                <a th:href="@{/admin/tasks/delete/{id}(id=${task.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Sekcja z listą użytkowników -->
+    <h3>List of Users</h3>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+z0I5TTITNghTm1B5eqdU/Vc8seWYRQDf7eL5G7"
+        crossorigin="anonymous"></script>
+</body>
+</html>

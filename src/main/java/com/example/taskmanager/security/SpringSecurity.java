@@ -16,7 +16,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SpringSecurity {
 
-
     private final UserDetailsService userDetailsService;
 
     public SpringSecurity(UserDetailsService userDetailsService) {
@@ -31,19 +30,19 @@ public class SpringSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-
                 .authorizeHttpRequests((authorize) ->
                         authorize
                                 .requestMatchers("/css/**", "/js/**", "/images/**", "/png/**").permitAll()
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/index").permitAll()
-                                .requestMatchers("/users").hasRole("ADMIN")
-
+                                .requestMatchers("/tasks/**").permitAll()
+                                .requestMatchers("/users").permitAll()
+                                .requestMatchers("/admin_dashboard").permitAll()
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users", true)
+                                .defaultSuccessUrl("/tasks/", true) // Zmienione na /tasks/
                                 .permitAll()
                 ).logout(
                         logout -> logout
