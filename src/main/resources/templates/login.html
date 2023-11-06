@@ -13,10 +13,10 @@
 <body>
 <div class="login-container">
     <div  class="error-message" th:if="${param.error}">
-        <div>Invalid Email or Password</div>
+        <div>Nieprawidłowy email lub hasło</div>
     </div>
     <div class="logout" th:if="${param.logout}">
-        <div> You have been logged out.</div>
+        <div>Zostałeś wylogowany</div>
     </div>
     <form
             method="post"
@@ -29,7 +29,7 @@
                 id="username"
                 name="username"
                 class="login-input"
-                placeholder="Enter email address"
+                placeholder="Adres E-mail"
                 required
         />
         <label for="password"></label><input
@@ -37,14 +37,14 @@
                 id="password"
                 name="password"
                 class="login-input"
-                placeholder="Enter password"
+                placeholder="Hasło"
                 required
         />
 
         <button type="submit" class="login-button">Login</button>
         <div class="bottom-links">
-            <a th:href="@{/register}">Register</a>
-            <a href="#">Forgot Password?</a>
+            <a th:href="@{/register}">Rejestracja</a>
+            <a href="#">Zapomniałeś hasła?</a>
         </div>
     </form>
 </div>

@@ -1,0 +1,153 @@
+/* styles.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    height: 100%; /* Pełna wysokość */
+    width: 200px; /* Szerokość sidebaru */
+    position: fixed; /* Fixed, aby sidebar był zawsze widoczny */
+    z-index: 1; /* Zawsze na wierzchu */
+    top: 0; /* Na górze strony */
+    left: 0; /* Po lewej stronie strony */
+    background-color: black; /* Kolor tła */
+    overflow-x: hidden; /* Ukryj poziome przewijanie */
+    padding-top: 20px;
+    justify-content: center;
+}
+.sidebar img {
+    max-width: 100%; /* Zapewnia, że logo będzie dopasowane do szerokości sidebaru */
+    display: block;
+    margin: auto;
+}
+.sidebar a {
+    padding-top: 10px;
+    text-decoration: none; /* Brak podkreślenia */
+    font-size: 25px; /* Rozmiar fontu */
+    color: #ffffff; /* Kolor fontu */
+    display: block; /* Elementy jako blok */
+}
+
+.sidebar a:hover {
+    color: #007bff; /* Kolor fontu podczas najechania */
+}
+
+.content {
+    margin-left: 200px; /* Margines, aby nie nakładać się na sidebar */
+    padding: 1px 16px; /* Padding dla zawartości */
+}
+.listname {
+    align-items: center;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.add-button {
+    padding: 4px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+
+}
+.add-button:hover {
+    background-color: #0056b3
+}
+
+.task-list{
+    width: 90%;
+}
+.task-list, th,tr,td{
+    padding: 4px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: top;
+    overflow: auto;
+    max-height: 100px;
+}
+.task-list td a{
+    display: block;
+}
+.task-list th{
+    background-color: #939393;
+}
+.no-wrap {
+    white-space: nowrap;
+}
+.edit-button {
+    display: block;
+    padding: 4px;
+    background-color: #ffc400;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 2px;
+
+}
+.edit-button:hover {
+    background-color: #be9509
+}
+.del-button {
+    display: block;
+    padding: 4px;
+    background-color: #ec6c50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 2px;
+}
+.del-button:hover {
+    background-color: #965647
+}
+.task-panel {
+    width: 50%
+}
+
+.task-field {
+    margin-bottom: 10px; /* Odstęp między polami */
+}
+
+.task-field label {
+    display: block; /* Etykiety nad polami */
+    margin-bottom: 5px; /* Odstęp między etykietą a polem */
+    font-weight: bold; /* Pogrubiona etykieta */
+}
+
+.task-field input[type="text"],
+.task-field input[type="date"],
+.task-field textarea {
+    width: 100%; /* Szerokość dostosowana do kontenera */
+    padding: 10px; /* Odstęp wewnętrzny */
+    border: 1px solid #ddd; /* Szara ramka */
+    border-radius: 4px; /* Lekko zaokrąglone rogi */
+}
+
+.task-field textarea {
+    height: 100px; /* Wysokość pola tekstowego */
+    resize: vertical; /* Możliwość zmiany rozmiaru tylko w pionie */
+}
+
+.task-field button {
+    padding: 10px 15px; /* Odstęp wewnętrzny */
+    background-color: #007bff; /* Niebieskie tło */
+    color: white; /* Biały tekst */
+    border: none; /* Brak ramki */
+    border-radius: 4px; /* Lekko zaokrąglone rogi */
+    cursor: pointer; /* Kursor wskazujący */
+}
+
+.task-field button:hover {
+    background-color: #0056b3; /* Ciemniejszy niebieski przy najechaniu */
+}
+
+.task-field input[type="checkbox"] {
+    margin-right: 5px; /* Odstęp między checkboxem a etykietą */
+}

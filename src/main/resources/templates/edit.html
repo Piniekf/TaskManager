@@ -2,54 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Task</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Edycja Zadania</title>
+    <link rel="stylesheet" type="text/css" href="/css/tasks_style.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/tasks/}">Task Manager</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/tasks/}">All Tasks</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/users}">Users</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="container">
-    <div class="row col-md-10">
+<div class="sidebar">
+    <nav>
+        <a  th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;"/></a>
+        <ul>
+            <li>
+                <a th:href="@{/tasks/}">Zadania</a>
+            </li>
+            <li>
+                <a  th:href="@{/users}">Użytkownicy</a>
+            </li>
+            <li>
+                <a  th:href="@{/logout}">Wyloguj</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="content">
+    <div class="task-panel">
         <h2>Edit Task</h2>
         <form th:object="${task}" method="post" th:action="@{/tasks/update/{id}(id=${task.id})}">
-            <div class="form-group">
-                <label for="taskName">Task Name</label>
-                <input type="text" class="form-control" id="taskName" th:field="*{taskName}" placeholder="Enter Task Name" required>
+            <div class="task-field">
+                <label for="taskName">Nazwa</label>
+                <input type="text" id="taskName" th:field="*{taskName}" placeholder="Nazwa" required>
             </div>
-            <div class="form-group">
-                <label for="taskDescription">Task Description</label>
-                <textarea class="form-control" id="taskDescription" th:field="*{taskDescription}" placeholder="Enter Task Description"></textarea>
+            <div class="task-field">
+                <label for="taskDescription">Opis</label>
+                <textarea id="taskDescription" th:field="*{taskDescription}" placeholder="Opis"></textarea>
             </div>
-            <div class="form-group">
-                <label for="dueDate">Due Date</label>
-                <input type="date" class="form-control" id="dueDate" th:field="*{dueDate}">
+            <div class="task-field">
+                <label for="dueDate">Data zakończenia</label>
+                <input type="date" id="dueDate" th:field="*{dueDate}">
             </div>
-            <div class="form-group">
-                <label for="createdDate">Created Date</label>
-                <input type="date" class="form-control" id="createdDate" th:value="${#dates.format(task.createdDate, 'yyyy-MM-dd')}" readonly>
+            <div class="task-field">
+                <label for="createdDate">Data Utworzenia</label>
+                <input type="date" id="createdDate" th:value="${#dates.format(task.createdDate, 'yyyy-MM-dd')}" readonly>
             </div>
-            <div class="form-check">
+            <div class="task-field">
                 <input type="checkbox" class="form-check-input" id="completed" th:field="*{completed}">
-                <label class="form-check-label" for="completed">Completed</label>
+                <label for="completed">Ukończono</label>
             </div>
-            <button type="submit" class="btn btn-primary">Update Task</button>
+            <button type="submit" style="font-size: 20px" class="add-button">Zatwierdź</button>
         </form>
     </div>
 </div>

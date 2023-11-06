@@ -22,12 +22,6 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/index")
-    public String home(){
-        return "index";
-    }
-
-
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
         UserDto user = new UserDto();
@@ -43,7 +37,7 @@ public class AuthController {
 
         if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
             result.rejectValue("email", null,
-                    "There is already an account registered with the same email");
+                    "Istnieje już konto z tym adresem e-mail");
         }
 
         if(result.hasErrors()){
