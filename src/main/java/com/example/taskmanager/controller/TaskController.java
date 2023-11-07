@@ -17,10 +17,14 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping("/")
-    public String listTasks(Model model) {
-        List<Task> tasks = taskService.getAllTask(); // Pobiera wszystkie zadania
-        model.addAttribute("tasks", tasks); // Dodaje listę zadań do modelu
-        return "list"; // Nazwa widoku, który ma być wyświetlony
+    public String listTasks(Model model,
+                            @RequestParam(name = "completed", required = false) Boolean completed,
+                            @RequestParam(name = "priority", required = false) Integer priority,
+                            @RequestParam(name = "taskName", required = false) String taskName,
+                            @RequestParam(name = "taskDescription", required = false) String taskDescription) {
+        List<Task> tasks = taskService.getFilteredTasks(completed, priority, taskName, taskDescription);
+        model.addAttribute("tasks", tasks);
+        return "list";
     }
 
     @GetMapping("/create")
@@ -48,7 +52,6 @@ public class TaskController {
         existingTask.setTaskName(task.getTaskName());
         existingTask.setTaskDescription(task.getTaskDescription());
         existingTask.setDueDate(task.getDueDate());
-        // Aktualizacja pola createdDate
         existingTask.setCreatedDate(existingTask.getCreatedDate());
         existingTask.setCompleted(task.isCompleted());
         existingTask.setPriority(task.getPriority());

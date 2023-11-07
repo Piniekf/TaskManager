@@ -32,6 +32,24 @@ public class TaskService {
         return taskRepository.findByCompletedFalse();
     }
 
+    public List<Task> getFilteredTasks(Boolean completed, Integer priority, String taskName, String taskDescription) {
+        if (completed != null && priority != null) {
+            return taskRepository.findByCompletedAndPriority(completed, priority);
+        } else if (completed != null) {
+            return completed ? findAllCompletedTask() : findAllInCompleteTask();
+        } else if (priority != null) {
+            return taskRepository.findByPriority(priority);
+        } else if (taskName != null && taskDescription != null) {
+            return taskRepository.findByTaskNameContainingIgnoreCaseAndTaskDescriptionContainingIgnoreCase(taskName, taskDescription);
+        } else if (taskName != null) {
+            return taskRepository.findByTaskNameContainingIgnoreCase(taskName);
+        } else if (taskDescription != null) {
+            return taskRepository.findByTaskDescriptionContainingIgnoreCase(taskDescription);
+        } else {
+            return getAllTask();
+        }
+    }
+
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
@@ -39,6 +57,4 @@ public class TaskService {
     public Task updateTask(Task task) {
         return taskRepository.save(task);
     }
-
 }
-
