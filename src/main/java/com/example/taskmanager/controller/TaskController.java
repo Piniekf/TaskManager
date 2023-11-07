@@ -1,11 +1,15 @@
 package com.example.taskmanager.controller;
 
-import com.example.taskmanager.entity.Task;
-import com.example.taskmanager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.example.taskmanager.entity.Task;
+import com.example.taskmanager.entity.User;
+import com.example.taskmanager.service.TaskService;
+import com.example.taskmanager.service.UserService;
 
 import java.util.List;
 
@@ -15,6 +19,9 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/")
     public String listTasks(Model model,
@@ -35,7 +42,18 @@ public class TaskController {
 
     @PostMapping("/")
     public String createTask(@ModelAttribute Task task) {
+        // Pobierz zalogowanego użytkownika
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Użyj serwisu użytkowników do znalezienia użytkownika na podstawie email
+        User currentUser = userService.findUserByEmail(userDetails.getUsername());
+
+        // Przypisz zalogowanego użytkownika do nowego zadania
+        task.setUser(currentUser);
+
+        // Zapisz zadanie do bazy danych
         taskService.createNewTask(task);
+
         return "redirect:/tasks/";
     }
 

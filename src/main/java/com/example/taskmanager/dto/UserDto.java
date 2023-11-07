@@ -1,3 +1,6 @@
+//Klasa UserDto jest używana do przekazywania danych użytkownika między warstwą prezentacji
+// tj. formularz logowania i rejestracji, a kontrolerem w aplikacji.
+
 package com.example.taskmanager.dto;
 
 import jakarta.validation.constraints.Email;

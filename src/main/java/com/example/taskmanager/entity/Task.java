@@ -1,4 +1,5 @@
 package com.example.taskmanager.entity;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -25,4 +26,8 @@ public class Task {
     @Min(1)
     @Max(3)
     private int priority; // Dodana kolumna "priorytet"
+
+    @ManyToOne
+    @JoinColumn(name = "created_by_user_id")
+    private User user;
 }

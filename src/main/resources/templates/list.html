@@ -80,18 +80,22 @@
             <th>Akcje</th>
         </tr>
         <tbody>
-        <tr th:each="task : ${tasks}">
-            <td th:text="${task.taskName}">Task Name</td>
-            <td th:text="${task.taskDescription}">Task Description</td>
-            <td class="no-wrap" th:text="${#dates.format(task.createdDate, 'yyyy-MM-dd')}">Created Date</td>
-            <td class= "no-wrap" th:text="${#dates.format(task.dueDate, 'yyyy-MM-dd')}">Due Date</td>
-            <td class="no-wrap" th:text="${task.completed ? 'Yes' : 'No'}">Completed Status</td>
-            <td th:text="${task.priority}">Priorytet</td>
-            <td>
-                <a class="edit-button" th:href="@{/tasks/edit/{id}(id=${task.id})}">Edytuj</a>
-                <a class="del-button" th:href="@{/tasks/delete/{id}(id=${task.id})}">Usun</a>
-            </td>
-        </tr>
+        <th:block th:each="task : ${tasks}">
+            <th:block th:if="${task.user.email == #authentication.principal.username}">
+                <tr>
+                    <td th:text="${task.taskName}">Task Name</td>
+                    <td th:text="${task.taskDescription}">Task Description</td>
+                    <td class="no-wrap" th:text="${#dates.format(task.createdDate, 'yyyy-MM-dd')}">Created Date</td>
+                    <td class="no-wrap" th:text="${#dates.format(task.dueDate, 'yyyy-MM-dd')}">Due Date</td>
+                    <td class="no-wrap" th:text="${task.completed ? 'Tak' : 'Nie'}">Completed Status</td>
+                    <td th:text="${task.priority == 1 ? 'Niski' : (task.priority == 2 ? 'Średni' : 'Wysoki')}">Priorytet</td>
+                    <td>
+                        <a class="edit-button" th:href="@{/tasks/edit/{id}(id=${task.id})}">Edytuj</a>
+                        <a class="del-button" th:href="@{/tasks/delete/{id}(id=${task.id})}">Usuń</a>
+                    </td>
+                </tr>
+            </th:block>
+        </th:block>
         </tbody>
     </table>
 </div>
