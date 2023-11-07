@@ -29,34 +29,28 @@ public class PasswordResetController {
 
     @PostMapping("/reset_password")
     public ResponseEntity<String> resetPassword(@RequestParam String email) {
-        // Sprawdzanie czy instnieje user
+
         User user = userService.findUserByEmail(email);
 
         if (user == null) {
             return new ResponseEntity<>("Użytkownik nie znaleziony", HttpStatus.NOT_FOUND);
         }
 
-        // Generuje token
         String resetToken = generateResetToken();
-
-        // Ustal datę ważności tokenu (obecny czas + 10 minut)
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, TOKEN_EXPIRATION_MINUTES);
         Date tokenExpiryDate = calendar.getTime();
 
-        // Aktualizuj token resetowania hasła w bazie danych w rekordzie użytkownika
         user.setResetPasswordToken(resetToken);
         user.setResetPasswordTokenExpiryDate(tokenExpiryDate);
-        userService.updateUser(user); // Użyj metody updateUser, aby dostosować logikę
+        userService.updateUser(user);
 
-        // Wyślij e-mail z linkiem resetowania hasła, zawierającym token
         sendPasswordResetEmail(user, resetToken);
 
         return new ResponseEntity<>("Wysłano mail resetujący!", HttpStatus.OK);
     }
 
     private String generateResetToken() {
-        // Generowanie unikalnego tokenu, np. za pomocą UUID
         return UUID.randomUUID().toString();
     }
 
