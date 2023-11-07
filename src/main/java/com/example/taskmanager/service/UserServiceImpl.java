@@ -56,6 +56,12 @@ public class UserServiceImpl implements UserService {
                 .map(this::mapToUserDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public User findUserByResetPasswordToken(String token) {
+        return userRepository.findByResetPasswordToken(token);
+    }
+
     @Override
     public void updateUser(User user) {
         userRepository.save(user);

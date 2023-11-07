@@ -39,6 +39,7 @@ public class SpringSecurity {
                                 .requestMatchers("/users").hasRole("ADMIN")
                                 .requestMatchers("/admin_dashboard").hasRole("ADMIN")
                                 .requestMatchers("/reset_password").permitAll()
+                                .requestMatchers("/change_password").permitAll()
                                 .requestMatchers("/projects").authenticated()
                 ).formLogin(
                         form -> form

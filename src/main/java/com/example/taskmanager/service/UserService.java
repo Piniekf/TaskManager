@@ -13,4 +13,6 @@ public interface UserService {
     void updateUser(User user);
 
     List<UserDto> findAllUsers();
+
+    User findUserByResetPasswordToken(String token);
 }
