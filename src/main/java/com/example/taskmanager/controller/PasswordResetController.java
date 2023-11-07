@@ -17,7 +17,6 @@ public class PasswordResetController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private JavaMailSender javaMailSender;
     private static final int TOKEN_EXPIRATION_MINUTES = 10; // Ważność tokenu
@@ -29,22 +28,17 @@ public class PasswordResetController {
 
     @PostMapping("/reset_password")
     public ResponseEntity<String> resetPassword(@RequestParam String email) {
-
         User user = userService.findUserByEmail(email);
-
         if (user == null) {
             return new ResponseEntity<>("Użytkownik nie znaleziony", HttpStatus.NOT_FOUND);
         }
-
         String resetToken = generateResetToken();
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, TOKEN_EXPIRATION_MINUTES);
         Date tokenExpiryDate = calendar.getTime();
-
         user.setResetPasswordToken(resetToken);
         user.setResetPasswordTokenExpiryDate(tokenExpiryDate);
         userService.updateUser(user);
-
         sendPasswordResetEmail(user, resetToken);
 
         return new ResponseEntity<>("Wysłano mail resetujący!", HttpStatus.OK);

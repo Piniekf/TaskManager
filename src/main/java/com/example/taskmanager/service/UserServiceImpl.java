@@ -63,6 +63,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserByActivationToken(String token) {
+        return null; // TO TRZEBA OGARNĄC DO WERYFIKACJI EMAIL
+    }
+
+    @Override
     public void updateUser(User user) {
         userRepository.save(user);
     }

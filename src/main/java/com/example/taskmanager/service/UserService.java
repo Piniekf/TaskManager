@@ -15,4 +15,6 @@ public interface UserService {
     List<UserDto> findAllUsers();
 
     User findUserByResetPasswordToken(String token);
+
+    User findUserByActivationToken(String token);
 }

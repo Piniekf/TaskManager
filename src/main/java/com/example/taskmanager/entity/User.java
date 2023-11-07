@@ -48,16 +48,20 @@ public class User implements Serializable {
     private List<Task> tasks = new ArrayList<>();
 
     private String resetPasswordToken;
-
     private Date resetPasswordTokenExpiryDate;
+    public Boolean isActivated = false;
+    public Date isActivatedExpiryDate;
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password) { // To jest napisane dla tokena, trzeba by było to chyba potem poprawić bo jest bez sensu w sumie ale działa
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
     public boolean isResetPasswordTokenValid() {
-        return resetPasswordTokenExpiryDate != null && resetPasswordTokenExpiryDate.after(Calendar.getInstance().getTime());
+        return resetPasswordTokenExpiryDate != null && resetPasswordTokenExpiryDate.after(Calendar.getInstance().getTime()); // To jest do resetowania hasłą
+    }
+    public boolean isActivatedTokenValid() {
+        return isActivatedExpiryDate != null && isActivatedExpiryDate.after(Calendar.getInstance().getTime()); // To jest do weryfikacji email
     }
 }
