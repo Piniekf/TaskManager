@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/login_style.css}" rel="stylesheet">
-
     <title>TaskManager Login</title>
-
 </head>
 <body>
 <div class="login-container">
@@ -18,37 +14,43 @@
     <div class="logout" th:if="${param.logout}">
         <div>Zostałeś wylogowany</div>
     </div>
-    <form
-            method="post"
-            role="form"
-            th:action="@{/login}"
-    >
+    <form method="post" role="form" th:action="@{/login}">
         <img src="/png/logo-2.png" alt="TaskManager Logo" class="logo">
         <label for="username"></label><input
-                type="text"
-                id="username"
-                name="username"
-                class="login-input"
-                placeholder="Adres E-mail"
-                required
-        />
+            type="text"
+            id="username"
+            name="username"
+            class="login-input"
+            placeholder="Adres E-mail"
+            required
+    />
         <label for="password"></label><input
-                type="password"
-                id="password"
-                name="password"
-                class="login-input"
-                placeholder="Hasło"
-                required
-        />
+            type="password"
+            id="password"
+            name="password"
+            class="login-input"
+            placeholder="Hasło"
+            required
+    />
 
         <button type="submit" class="login-button">Login</button>
         <div class="bottom-links">
             <a th:href="@{/register}">Rejestracja</a>
-            <a href="#">Zapomniałeś hasła?</a>
+            <a href="#" id="forgotPasswordLink">Zapomniałeś hasła?</a>
         </div>
     </form>
 </div>
+
+
+<form id="resetPasswordForm" method="get" th:action="@{/reset_password}" style="display: none;">
+</form>
+
+
+<script>
+    document.getElementById("forgotPasswordLink").addEventListener("click", function() {
+        // Przekieruj użytkownika na stronę reset_password.html po kliknięciu
+        document.getElementById("resetPasswordForm").submit();
+    });
+</script>
 </body>
 </html>
-
-
