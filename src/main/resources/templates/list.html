@@ -8,24 +8,24 @@
 <body>
 <div class="sidebar">
     <nav>
-        <a  th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;"/></a>
-            <ul>
-                <li>
-                    <a th:href="@{/tasks/}">Zadania</a>
-                </li>
-                <li>
-                    <a  th:href="@{/users}">Użytkownicy</a>
-                </li>
-                <li>
-                    <a  th:href="@{/logout}">Wyloguj</a>
-                </li>
-            </ul>
+        <a th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;"/></a>
+        <ul>
+            <li>
+                <a th:href="@{/tasks/}">Zadania</a>
+            </li>
+            <li>
+                <a th:href="@{/users}">Użytkownicy</a>
+            </li>
+            <li>
+                <a th:href="@{/logout}">Wyloguj</a>
+            </li>
+        </ul>
     </nav>
 </div>
 <div class="content">
     <div class="listname">
         Lista zadań
-        <a class="add-button"  th:href="@{/tasks/create}">+Dodaj</a>
+        <a class="add-button" th:href="@{/tasks/create}">+Dodaj</a>
     </div>
     <table class="task-list">
         <tr>
@@ -34,6 +34,7 @@
             <th>Utworzono</th>
             <th>Realizacja</th>
             <th>Zakończono</th>
+            <th>Priorytet</th> <!-- Nowa kolumna Priorytet -->
             <th>Akcje</th>
         </tr>
         <tbody>
@@ -43,6 +44,7 @@
             <td class="no-wrap" th:text="${#dates.format(task.createdDate, 'yyyy-MM-dd')}">Created Date</td>
             <td class="no-wrap" th:text="${#dates.format(task.dueDate, 'yyyy-MM-dd')}">Due Date</td>
             <td class="no-wrap" th:text="${task.completed ? 'Yes' : 'No'}">Completed Status</td>
+            <td th:text="${task.priority}">Priorytet</td> <!-- Wyświetlanie Priorytetu -->
             <td>
                 <a class="edit-button" th:href="@{/tasks/edit/{id}(id=${task.id})}">Edytuj</a>
                 <a class="del-button" th:href="@{/tasks/delete/{id}(id=${task.id})}">Usun</a>

@@ -51,6 +51,7 @@ public class TaskController {
         // Aktualizacja pola createdDate
         existingTask.setCreatedDate(existingTask.getCreatedDate());
         existingTask.setCompleted(task.isCompleted());
+        existingTask.setPriority(task.getPriority());
         taskService.updateTask(existingTask);
         return "redirect:/tasks/";
     }

@@ -8,16 +8,16 @@
 <body>
 <div class="sidebar">
     <nav>
-        <a  th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;"/></a>
+        <a th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;" /></a>
         <ul>
             <li>
                 <a th:href="@{/tasks/}">Zadania</a>
             </li>
             <li>
-                <a  th:href="@{/users}">Użytkownicy</a>
+                <a th:href="@{/users}">Użytkownicy</a>
             </li>
             <li>
-                <a  th:href="@{/logout}">Wyloguj</a>
+                <a th:href="@{/logout}">Wyloguj</a>
             </li>
         </ul>
     </nav>
@@ -41,6 +41,14 @@
             <div class="task-field">
                 <label for="createdDate">Data Utworzenia</label>
                 <input type="date" id="createdDate" th:value="${#dates.format(task.createdDate, 'yyyy-MM-dd')}" readonly>
+            </div>
+            <div class="task-field">
+                <label for="priority">Priorytet</label>
+                <select id="priority" th:field="*{priority}" required>
+                    <option value="1" th:selected="${task.priority == 1}">1</option>
+                    <option value="2" th:selected="${task.priority == 2}">2</option>
+                    <option value="3" th:selected="${task.priority == 3}">3</option>
+                </select>
             </div>
             <div class="task-field">
                 <input type="checkbox" class="form-check-input" id="completed" th:field="*{completed}">

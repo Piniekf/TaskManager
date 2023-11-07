@@ -25,31 +25,38 @@
 <div class="content">
     <div class="task-panel">
         <h2>Utwórz Nowe Zadanie</h2>
-    <form th:object="${task}" method="POST" th:action="@{/tasks/}">
-        <div class="task-field">
-            <label for="taskName">Nazwa</label>
-            <input type="text" id="taskName" th:field="*{taskName}" placeholder="Enter Task Name" required>
-        </div>
-        <div class="task-field">
-            <label for="taskDescription">Opis</label>
-            <textarea id="taskDescription" th:field="*{taskDescription}" placeholder="Enter Task Description"></textarea>
-        </div>
-        <div class="task-field">
-            <label for="dueDate">Data Zakończenia</label>
-            <input type="date" id="dueDate" th:field="*{dueDate}">
-        </div>
-        <div class="task-field">
-            <label for="createdDate">Data Ukończenia</label>
-            <input type="date" id="createdDate" th:field="*{createdDate}" readonly>
-        </div>
-        <div class="task-field">
-            <input type="checkbox" class="form-check-input" id="completed" th:field="*{completed}">
-            <label for="completed">Ukończony</label>
-        </div>
-        <button type="submit" style="font-size: 20px" class="add-button">Utwórz</button>
-    </form>
+        <form th:object="${task}" method="POST" th:action="@{/tasks/}">
+            <div class="task-field">
+                <label for="taskName">Nazwa</label>
+                <input type="text" id="taskName" th:field="*{taskName}" placeholder="Enter Task Name" required>
+            </div>
+            <div class="task-field">
+                <label for="taskDescription">Opis</label>
+                <textarea id="taskDescription" th:field="*{taskDescription}" placeholder="Enter Task Description"></textarea>
+            </div>
+            <div class="task-field">
+                <label for="dueDate">Data Zakończenia</label>
+                <input type="date" id="dueDate" th:field="*{dueDate}">
+            </div>
+            <div class="task-field">
+                <label for="createdDate">Data Ukończenia</label>
+                <input type="date" id="createdDate" th:field="*{createdDate}" readonly>
+            </div>
+            <div class="task-field">
+                <label for="priority">Priorytet</label>
+                <select id="priority" th:field="*{priority}" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="task-field">
+                <input type="checkbox" class="form-check-input" id="completed" th:field="*{completed}">
+                <label for="completed">Ukończony</label>
+            </div>
+            <button type="submit" style="font-size: 20px" class="add-button">Utwórz</button>
+        </form>
     </div>
-
 </div>
 <script>
     document.getElementById('createdDate').valueAsDate = new Date();
