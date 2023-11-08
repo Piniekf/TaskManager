@@ -82,6 +82,7 @@ public class AuthController {
     }
     private void sendActivationEmail(String email, String activationToken) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("taskmanagerautomat@gmail.com");
         mailMessage.setTo(email);
         mailMessage.setSubject("Aktywacja konta w TaskManager");
         mailMessage.setText("Kliknij w link, aby aktywować swoje konto: http://localhost:8080/activate?token=" + activationToken);

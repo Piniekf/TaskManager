@@ -50,6 +50,7 @@ public class PasswordResetController {
 
     private void sendPasswordResetEmail(User user, String resetToken) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("taskmanagerautomat@gmail.com");
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("TaskManager - Zresetuj hasło");
         mailMessage.setText("Kliknij w link aby zresetować hasło: http://localhost:8080/change_password?token=" + resetToken);
