@@ -5,12 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/register_style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/register_style_light.css}" id="theme-stylesheet">
     <title>Rejestracja w TaskManager</title>
 </head>
 <body>
+<div class="theme-button"><button id="theme-button" class="register-button" onclick="toggleCSS()">Ciemny motyw</button>
+</div>
 <div class="register-container">
-    <img src="/png/logo-2.png" alt="Logo TaskManager" class="logo">
+    <img src="/png/logo-2.png" alt="Logo TaskManager" class="logo" id="logo">
 
     <div th:if="${param.success}">
         <div class="logout">
@@ -83,6 +85,7 @@
         <a th:href="@{/login}">Masz już konto? Zaloguj się</a>
     </div>
 </div>
+<script src="/js/theme-switcher.js"></script>
 </body>
 </html>
 

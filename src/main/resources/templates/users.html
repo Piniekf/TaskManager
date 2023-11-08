@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel - Task Manager</title>
-    <link rel="stylesheet" type="text/css" href="/css/tasks_style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tasks_style_light.css}" id="theme-stylesheet">
 </head>
 <body>
 <div class="sidebar">
@@ -25,6 +25,8 @@
     </nav>
 </div>
 <div class="content">
+    <div class="theme-button"><button id="theme-button" class="add-button" onclick="toggleCSS()">Ciemny motyw</button>
+    </div>
     <div class="listname">
         <h2>Lista zarejestrowanych użytkowników</h2>
     </div>
@@ -43,5 +45,6 @@
         </tbody>
     </table>
 </div>
+<script src="/js/theme-switcher.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
-/* styles.css */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background-color: #262626;
 }
 
 .sidebar {
@@ -30,12 +30,25 @@ body {
 }
 
 .sidebar a:hover {
-    color: #007bff; /* Kolor fontu podczas najechania */
+    color: #c2c2c2; /* Kolor fontu podczas najechania */
 }
 
 .content {
     margin-left: 200px; /* Margines, aby nie nakładać się na sidebar */
     padding: 1px 16px; /* Padding dla zawartości */
+    color: white;
+}
+.task-input {
+    color: white;
+    width: 280px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #777777;
+    border-radius: 5px;
+    background-color: #777777;
+}
+input::placeholder{
+    color:white;
 }
 .listname {
     align-items: center;
@@ -45,8 +58,8 @@ body {
 }
 .add-button {
     padding: 4px;
-    background-color: #007BFF;
-    color: white;
+    background-color: #c2c2c2;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -54,7 +67,7 @@ body {
 
 }
 .add-button:hover {
-    background-color: #0056b3
+    background-color: #8c8c8c;
 }
 
 .task-list{
@@ -150,4 +163,9 @@ body {
 
 .task-field input[type="checkbox"] {
     margin-right: 5px; /* Odstęp między checkboxem a etykietą */
+}
+.theme-button{
+    position: absolute;
+    top:10px;
+    right: 10px;
 }

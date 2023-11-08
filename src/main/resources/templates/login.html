@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link th:href="@{/css/login_style.css}" rel="stylesheet">
+    <link th:href="@{/css/login_style_light.css}" rel="stylesheet"  id="theme-stylesheet">
     <title>TaskManager Login</title>
 </head>
 <body>
+<div class="theme-button"><button id="theme-button" class="login-button" onclick="toggleCSS()">Ciemny motyw</button>
+</div>
+
 <div class="login-container">
     <div  class="error-message" th:if="${param.error}">
         <div>Nieprawidłowy email lub hasło</div>
@@ -15,7 +18,7 @@
         <div>Zostałeś wylogowany</div>
     </div>
     <form method="post" role="form" th:action="@{/login}">
-        <img src="/png/logo-2.png" alt="TaskManager Logo" class="logo">
+        <img src="/png/logo-2.png" alt="TaskManager Logo" class="logo" id="logo">
         <label for="username"></label><input
             type="text"
             id="username"
@@ -52,5 +55,6 @@
         document.getElementById("resetPasswordForm").submit();
     });
 </script>
+<script src="/js/theme-switcher.js"></script>
 </body>
 </html>

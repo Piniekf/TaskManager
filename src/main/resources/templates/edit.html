@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edycja Zadania</title>
-    <link rel="stylesheet" type="text/css" href="/css/tasks_style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tasks_style_light.css}" id="theme-stylesheet">
 </head>
 <body>
 <div class="sidebar">
@@ -24,31 +24,33 @@
     </nav>
 </div>
 <div class="content">
+    <div class="theme-button"><button id="theme-button" class="add-button" onclick="toggleCSS()">Ciemny motyw</button>
+    </div>
     <div class="task-panel">
         <h2>Edit Task</h2>
         <form th:object="${task}" method="post" th:action="@{/tasks/update/{id}(id=${task.id})}">
             <div class="task-field">
                 <label for="taskName">Nazwa</label>
-                <input type="text" id="taskName" th:field="*{taskName}" placeholder="Nazwa" required>
+                <input class="task-input" type="text" id="taskName" th:field="*{taskName}" placeholder="Nazwa" required>
             </div>
             <div class="task-field">
                 <label for="taskDescription">Opis</label>
-                <textarea id="taskDescription" th:field="*{taskDescription}" placeholder="Opis"></textarea>
+                <textarea class="task-input" id="taskDescription" th:field="*{taskDescription}" placeholder="Opis"></textarea>
             </div>
             <div class="task-field">
                 <label for="dueDate">Data zakończenia</label>
-                <input type="date" id="dueDate" th:field="*{dueDate}">
+                <input class="task-input" type="date" id="dueDate" th:field="*{dueDate}">
             </div>
             <div class="task-field">
                 <label for="createdDate">Data Utworzenia</label>
-                <input type="date" id="createdDate" th:value="${#dates.format(task.createdDate, 'yyyy-MM-dd')}" readonly>
+                <input class="task-input" type="date" id="createdDate" th:value="${#dates.format(task.createdDate, 'yyyy-MM-dd')}" readonly>
             </div>
             <div class="task-field">
                 <label for="priority">Priorytet</label>
-                <select id="priority" th:field="*{priority}" required>
-                    <option value="1" th:selected="${task.priority == 1}">1</option>
-                    <option value="2" th:selected="${task.priority == 2}">2</option>
-                    <option value="3" th:selected="${task.priority == 3}">3</option>
+                <select class="task-input" id="priority" th:field="*{priority}" required>
+                    <option value="1" th:selected="${task.priority == 1}">Niski</option>
+                    <option value="2" th:selected="${task.priority == 2}">Średni</option>
+                    <option value="3" th:selected="${task.priority == 3}">Wysoki</option>
                 </select>
             </div>
             <div class="task-field">
@@ -59,5 +61,6 @@
         </form>
     </div>
 </div>
+<script src="/js/theme-switcher.js"></script>
 </body>
 </html>

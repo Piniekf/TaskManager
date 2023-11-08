@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-container {
+    width: 300px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 20px;
+    width: 100px; /* Dostosuj tę wartość w zależności od rozmiaru Twojego logo */
+}
+
+.register-input {
+    width: 280px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.register-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.register-button:hover {
+    background-color: #0056b3;
+}
+
+.bottom-link {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+.logout {
+    color: #0044c0;
+    font-size: 12px;
+    margin: 6px auto;
+    text-align: center;
+    padding: 6px;
+    border-radius: 8px;
+    background-color: #6fc4f3;
+    width: 250px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+.error-message {
+    olor: #ff0000;
+    font-size: 12px;
+    margin: 6px auto;
+    text-align: center;
+    padding: 6px;
+    border-radius: 8px;
+    background-color: #f57489;
+    width: 250px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+.theme-button{
+    position: absolute;
+    top:10px;
+    right: 10px;
+}

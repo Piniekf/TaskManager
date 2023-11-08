@@ -9,20 +9,22 @@ body {
     justify-content: center;
 }
 
-.register-container {
+.login-container {
     width: 300px;
     padding: 20px;
+    padding-right: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    align-items: center;
 }
 
 .logo {
     display: block;
     margin: 0 auto 20px;
-    width: 100px; /* Dostosuj tę wartość w zależności od rozmiaru Twojego logo */
+    width: 100px; /* Adjust this value based on your logo's size */
 }
 
-.register-input {
+.login-input {
     width: 280px;
     padding: 10px;
     margin-bottom: 10px;
@@ -30,7 +32,7 @@ body {
     border-radius: 5px;
 }
 
-.register-button {
+.login-button {
     width: 100%;
     padding: 10px;
     background-color: #007BFF;
@@ -40,13 +42,13 @@ body {
     cursor: pointer;
 }
 
-.register-button:hover {
+.login-button:hover {
     background-color: #0056b3;
 }
 
-.bottom-link {
+.bottom-links {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 10px;
 }
 
@@ -57,6 +59,17 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+.error-message {
+    olor: #ff0000;
+    font-size: 12px;
+    margin: 6px auto;
+    text-align: center;
+    padding: 6px;
+    border-radius: 8px;
+    background-color: #f57489;
+    width: 250px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 .logout {
     color: #0044c0;
@@ -69,14 +82,8 @@ a:hover {
     width: 250px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
-.error-message {
-    olor: #ff0000;
-    font-size: 12px;
-    margin: 6px auto;
-    text-align: center;
-    padding: 6px;
-    border-radius: 8px;
-    background-color: #f57489;
-    width: 250px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+.theme-button{
+    position: absolute;
+    top:10px;
+    right: 10px;
 }

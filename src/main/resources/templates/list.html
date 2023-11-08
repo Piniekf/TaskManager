@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Task Manager</title>
-    <link rel="stylesheet" type="text/css" href="/css/tasks_style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tasks_style_light.css}" id="theme-stylesheet">
 </head>
 <body>
 <div class="sidebar">
@@ -24,13 +24,15 @@
     </nav>
 </div>
 <div class="content">
+    <div class="theme-button"><button id="theme-button" class="add-button" onclick="toggleCSS()">Ciemny motyw</button>
+    </div>
     <div class="listname">
         Lista zadań
         <a class="add-button" th:href="@{/tasks/create}">+Dodaj</a>
     </div>
     <form th:action="@{/tasks/}" method="get">
         <label for="filterType">Wybierz rodzaj filtra:</label>
-        <select name="filterType" id="filterType">
+        <select class="task-input" name="filterType" id="filterType">
             <option value="all">Brak filtra</option>
             <option value="completed">Zakończone</option>
             <option value="priority">Priorytet</option>
@@ -40,7 +42,7 @@
 
         <div id="completedFilter" class="filter-group" style="display: none;">
             <label for="completed">Zakończone:</label>
-            <select name="completed" id="completed">
+            <select class="task-input" name="completed" id="completed">
                 <option value="">Wszystkie</option>
                 <option value="true">Tak</option>
                 <option value="false">Nie</option>
@@ -49,7 +51,7 @@
 
         <div id="priorityFilter" class="filter-group" style="display: none;">
             <label for="priority">Priorytet:</label>
-            <select name="priority" id="priority">
+            <select class="task-input" name="priority" id="priority">
                 <option value="">Wszystkie</option>
                 <option value="1">Niski</option>
                 <option value="2">Średni</option>
@@ -59,15 +61,15 @@
 
         <div id="taskNameFilter" class="filter-group" style="display: none;">
             <label for="taskName">Filtruj po nazwie zadania:</label>
-            <input type="text" name="taskName" id="taskName">
+            <input class="task-input" type="text" name="taskName" id="taskName">
         </div>
 
         <div id="taskDescriptionFilter" class="filter-group" style="display: none;">
             <label for="taskDescription">Filtruj po opisie zadania:</label>
-            <input type="text" name="taskDescription" id="taskDescription">
+            <input class="task-input" type="text" name="taskDescription" id="taskDescription">
         </div>
 
-        <input type="submit" value="Filtruj">
+        <input class="add-button" type="submit" value="Filtruj">
     </form>
 
     <table class="task-list">
@@ -118,5 +120,6 @@
         }
     });
 </script>
+<script src="/js/theme-switcher.js"></script>
 </body>
 </html>
