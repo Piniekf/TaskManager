@@ -41,6 +41,7 @@ public class SpringSecurity {
                                 .requestMatchers("/reset_password").permitAll()
                                 .requestMatchers("/change_password").permitAll()
                                 .requestMatchers("/projects").authenticated()
+                                .requestMatchers("/activate").permitAll()
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")

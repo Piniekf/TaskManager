@@ -5,16 +5,20 @@ import com.example.taskmanager.entity.Role;
 import com.example.taskmanager.entity.User;
 import com.example.taskmanager.repository.RoleRepository;
 import com.example.taskmanager.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+    @Autowired
+    private JavaMailSender javaMailSender;
+    private static final int TOKEN_EXPIRATION_MINUTES = 10; // Ważność tokenu
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
@@ -33,8 +37,15 @@ public class UserServiceImpl implements UserService {
         user.setName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        String activationToken = generateActiveToken();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, TOKEN_EXPIRATION_MINUTES);
+        Date tokenExpiryDate = calendar.getTime();
+        user.setIsActivatedToken(activationToken);
+        user.setIsActivatedExpiryDate(tokenExpiryDate);
+        sendActivationEmail(user.getEmail(), user.isActivatedToken);
 
-        // Znajdź lub utwórz rolę "user"
+
         Role role = roleRepository.findByName("ROLE_USER");
         if (role == null) {
             role = createDefaultUserRole();
@@ -64,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByActivationToken(String token) {
-        return null; // TO TRZEBA OGARNĄC DO WERYFIKACJI EMAIL
+        return userRepository.findByIsActivatedToken(token); // Ogarnięte
     }
 
     @Override
@@ -85,5 +96,29 @@ public class UserServiceImpl implements UserService {
         Role role = new Role();
         role.setName("ROLE_USER");
         return roleRepository.save(role);
+    }
+
+    // To jest od weryfikacji email
+
+    @Override
+    public boolean isActivationTokenValid(String token) {
+        User user = userRepository.findByIsActivatedToken(token);
+        if (user != null && user.isActivatedTokenValid()) {
+            return true;
+        }
+        return false;
+    }
+
+    private String generateActiveToken() {
+        return UUID.randomUUID().toString();
+    }
+
+    private void sendActivationEmail(String email, String activationToken) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("taskmanagerautomat@gmail.com");
+        mailMessage.setTo(email);
+        mailMessage.setSubject("Aktywacja konta w TaskManager");
+        mailMessage.setText("Kliknij w link, aby aktywować swoje konto: http://localhost:8080/activate?token=" + activationToken);
+        javaMailSender.send(mailMessage);
     }
 }

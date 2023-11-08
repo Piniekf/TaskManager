@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -26,4 +27,8 @@ public class UserDto
     private String email;
     @NotEmpty(message = "Hasło nie może być puste")
     private String password;
+
+    public Boolean isActivated = false;
+    public Date isActivatedExpiryDate;
+    public String isActivatedToken;
 }

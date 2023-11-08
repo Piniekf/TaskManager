@@ -17,4 +17,7 @@ public interface UserService {
     User findUserByResetPasswordToken(String token);
 
     User findUserByActivationToken(String token);
+
+    boolean isActivationTokenValid(String token);
+
 }
