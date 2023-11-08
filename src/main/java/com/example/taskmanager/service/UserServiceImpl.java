@@ -77,7 +77,6 @@ public class UserServiceImpl implements UserService {
     public User findUserByActivationToken(String token) {
         return userRepository.findByIsActivatedToken(token); // Ogarnięte
     }
-
     @Override
     public void updateUser(User user) {
         userRepository.save(user);
