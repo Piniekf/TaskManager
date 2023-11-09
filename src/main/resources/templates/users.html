@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel - Task Manager</title>
@@ -10,22 +8,23 @@
 <body>
 <div class="sidebar">
     <nav>
-        <a  th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;"/></a>
+        <a th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;"/></a>
         <ul>
             <li>
                 <a th:href="@{/tasks/}">Zadania</a>
             </li>
             <li>
-                <a  th:href="@{/users}">Użytkownicy</a>
+                <a th:href="@{/users}">Użytkownicy</a>
             </li>
             <li>
-                <a  th:href="@{/logout}">Wyloguj</a>
+                <a th:href="@{/logout}">Wyloguj</a>
             </li>
         </ul>
     </nav>
 </div>
 <div class="content">
-    <div class="theme-button"><button id="theme-button" class="add-button" onclick="toggleCSS()">Ciemny motyw</button>
+    <div class="theme-button">
+        <button id="theme-button" class="add-button" onclick="toggleCSS()">Ciemny motyw</button>
     </div>
     <div class="listname">
         <h2>Lista zarejestrowanych użytkowników</h2>
@@ -35,12 +34,16 @@
             <th>Imie</th>
             <th>Nazwisko</th>
             <th>Email</th>
+            <th>Akcje</th>
         </tr>
         <tbody>
-        <tr th:each = "user : ${users}">
-            <td th:text = "${user.firstName}"></td>
-            <td th:text = "${user.lastName}"></td>
-            <td th:text = "${user.email}"></td>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <a class="del-button" th:href="@{/users/delete/{id}(id=${user.id})}">Usuń</a>
+            </td>
         </tr>
         </tbody>
     </table>

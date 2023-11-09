@@ -1,5 +1,4 @@
 package com.example.taskmanager;
-
 import com.example.taskmanager.entity.Role;
 import com.example.taskmanager.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
