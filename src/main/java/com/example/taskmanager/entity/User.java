@@ -53,14 +53,14 @@ public class User implements Serializable {
     // Do resetowania hasła
     private String resetPasswordToken;
     private Date resetPasswordTokenExpiryDate;
-    public User(String name, String email, String password) { // To jest napisane dla tokena, trzeba by było to chyba potem poprawić bo jest bez sensu w sumie ale działa
+    public User(String name, String email, String password) { // To jest napisane dla tokena, trzeba by to chyba potem poprawić bo jest bez sensu w sumie ale działa
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
     public boolean isResetPasswordTokenValid() {
-        return resetPasswordTokenExpiryDate != null && resetPasswordTokenExpiryDate.after(Calendar.getInstance().getTime()); // To jest do resetowania hasłą
+        return resetPasswordTokenExpiryDate != null && resetPasswordTokenExpiryDate.after(Calendar.getInstance().getTime()); // Resetowanie hasła
     }
     
     public Boolean isActivated = false;
