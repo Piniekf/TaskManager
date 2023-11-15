@@ -1,8 +1,11 @@
 package com.example.taskmanager.controller;
+
 import com.example.taskmanager.entity.Projects;
 import com.example.taskmanager.entity.User;
+import com.example.taskmanager.entity.Task;
 import com.example.taskmanager.service.ProjectsService;
 import com.example.taskmanager.service.UserService;
+import com.example.taskmanager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +25,9 @@ public class ProjectsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TaskService taskService;
+
     @GetMapping("/")
     public String listProjects(Model model,
                                @RequestParam(name = "completed", required = false) Boolean completed,
@@ -35,22 +41,25 @@ public class ProjectsController {
 
     @GetMapping("/create_project")
     public String showCreateProjectForm(Model model) {
+        List<Task> allTasks = taskService.getAllTask();
         model.addAttribute("projects", new Projects());
+        model.addAttribute("allTasks", allTasks);
         return "create_project";
     }
 
     @PostMapping("/")
-    public String createProject(@ModelAttribute Projects projects) {
-        // Pobierz zalogowanego użytkownika
+    public String createProject(@ModelAttribute Projects projects,
+                                @RequestParam(name = "selectedTasks", required = false) List<Long> selectedTasks) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // Użyj serwisu użytkowników do znalezienia użytkownika na podstawie email
         User currentUser = userService.findUserByEmail(userDetails.getUsername());
 
-        // Przypisz zalogowanego użytkownika do nowego zadania
         projects.setUser(currentUser);
 
-        // Zapisz zadanie do bazy danych
+        if (selectedTasks != null) {
+            List<Task> tasks = taskService.getTasksByIds(selectedTasks);
+            projects.setTask(tasks);
+        }
+
         projectsService.createNewProject(projects);
 
         return "redirect:/projects/";
@@ -59,20 +68,29 @@ public class ProjectsController {
     @GetMapping("/edit_project/{id}")
     public String showEditProjectForm(@PathVariable Long id, Model model) {
         Projects projects = projectsService.findProjectById(id);
+        List<Task> allTasks = taskService.getAllTask();
         model.addAttribute("projects", projects);
+        model.addAttribute("allTasks", allTasks);
         return "edit_project";
     }
 
     @PostMapping("/update/{id}")
-    public String updateProject(@PathVariable Long id, @ModelAttribute Projects projects) {
+    public String updateProject(@PathVariable Long id, @ModelAttribute Projects projects,
+                                @RequestParam(name = "selectedTasks", required = false) List<Long> selectedTasks) {
         Projects existingProject = projectsService.findProjectById(id);
         existingProject.setProjectName(projects.getProjectName());
         existingProject.setProjectDescription(projects.getProjectDescription());
         existingProject.setDueDate(projects.getDueDate());
-        existingProject.setCreatedDate(existingProject.getCreatedDate());
         existingProject.setCompleted(projects.isCompleted());
         existingProject.setPriority(projects.getPriority());
+
+        if (selectedTasks != null) {
+            List<Task> tasks = taskService.getTasksByIds(selectedTasks);
+            existingProject.setTask(tasks);
+        }
+
         projectsService.updateProject(existingProject);
+
         return "redirect:/projects/";
     }
 
@@ -82,4 +100,3 @@ public class ProjectsController {
         return "redirect:/projects/";
     }
 }
-
