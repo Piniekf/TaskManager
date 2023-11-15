@@ -84,6 +84,7 @@
             <th>Utworzono</th>
             <th>Zakończono</th>
             <th>Priorytet</th>
+            <th>Zadania</th> <!-- Dodano nową kolumnę -->
             <th>Akcje</th>
         </tr>
         </thead>
@@ -94,6 +95,11 @@
             <td class="no-wrap" th:text="${#dates.format(project.createdDate, 'yyyy-MM-dd')}">Data utworzenia</td>
             <td class="no-wrap" th:text="${project.completed ? 'Tak' : 'Nie'}">Zakończony</td>
             <td th:text="${project.priority == 1 ? 'Niski' : (project.priority == 2 ? 'Średni' : 'Wysoki')}">Priorytet</td>
+            <td>
+                <ul>
+                    <li th:each="task : ${project.task}" th:text="${task.taskName}"></li>
+                </ul>
+            </td>
             <td>
                 <a class="edit-button" th:href="@{/projects/edit_project/{id}(id=${project.id})}">Edytuj</a>
                 <a class="del-button" th:href="@{/projects/delete/{id}(id=${project.id})}">Usuń</a>

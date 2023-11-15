@@ -58,6 +58,12 @@
                 </select>
             </div>
             <div class="task-field">
+                <label for="selectedTasks">Wybierz Zadania</label>
+                <select multiple class="task-input" id="selectedTasks" th:field="*{task}">
+                    <option th:each="task : ${allTasks}" th:value="${task.id}" th:text="${task.taskName}" th:selected="${projects.task != null && projects.task.contains(task)}"></option>
+                </select>
+            </div>
+            <div class="task-field">
                 <label for="completed">Ukończono</label>
                 <input type="checkbox" class="form-check-input" id="completed" th:field="*{completed}">
             </div>

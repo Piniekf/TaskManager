@@ -61,6 +61,12 @@
                     <option value="3">Wysoki</option>
                 </select>
             </div>
+            <div class="task-field">
+                <label for="selectedTasks">Wybierz Zadania</label>
+                <select multiple class="task-input" id="selectedTasks" th:field="*{task}">
+                    <option th:each="task : ${allTasks}" th:value="${task.id}" th:text="${task.taskName}"></option>
+                </select>
+            </div>
             <button type="submit" class="add-button">Utwórz</button>
         </form>
     </div>
