@@ -8,10 +8,13 @@
 <body>
 <div class="sidebar">
     <nav>
-        <a th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;" /></a>
+        <a th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;"/></a>
         <ul>
             <li>
                 <a th:href="@{/tasks/}">Zadania</a>
+            </li>
+            <li>
+                <a th:href="@{/projects}">Projekty</a>
             </li>
             <!-- Warunek, który ukrywa zakładkę "Użytkownicy" dla użytkowników z rolą "User" -->
             <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">

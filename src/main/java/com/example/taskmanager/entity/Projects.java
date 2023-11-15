@@ -3,6 +3,7 @@ package com.example.taskmanager.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import java.util.List;
 import lombok.*;
 
 @Entity
@@ -15,7 +16,7 @@ public class Projects {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String project;
+    private String projects;
     private String projectName;
     private String projectDescription;
     private boolean completed;
@@ -29,4 +30,6 @@ public class Projects {
     @ManyToOne
     @JoinColumn(name = "created_by_user_id")
     private User user;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Task> task;
 }

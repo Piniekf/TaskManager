@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Utwórz Zadanie</title>
+    <title>Edycja Projektu</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/tasks_style_light.css}" id="theme-stylesheet">
 </head>
 <body>
@@ -27,46 +27,44 @@
     </nav>
 </div>
 <div class="content">
-    <div class="theme-button"><button id="theme-button" class="add-button" onclick="toggleCSS()">Ciemny motyw</button>
+    <div class="theme-button">
+        <button id="theme-button" class="add-button" onclick="toggleCSS()">Ciemny motyw</button>
     </div>
     <div class="task-panel">
-        <h2>Utwórz Nowe Zadanie</h2>
-        <form th:object="${task}" method="POST" th:action="@{/tasks/}">
+        <h2>Edytuj Projekt</h2>
+        <form th:object="${projects}" method="post" th:action="@{/projects/update/{id}(id=${projects.id})}">
             <div class="task-field">
-                <label for="taskName">Nazwa</label>
-                <input class="task-input" type="text" id="taskName" th:field="*{taskName}" placeholder="Enter Task Name" required>
+                <label for="projectName">Nazwa</label>
+                <input class="task-input" type="text" id="projectName" th:field="*{projectName}" placeholder="Nazwa" required>
             </div>
             <div class="task-field">
-                <label for="taskDescription">Opis</label>
-                <textarea class="task-input" id="taskDescription" th:field="*{taskDescription}" placeholder="Enter Task Description"></textarea>
+                <label for="projectDescription">Opis</label>
+                <textarea class="task-input" id="projectDescription" th:field="*{projectDescription}" placeholder="Opis"></textarea>
             </div>
             <div class="task-field">
-                <label for="dueDate">Data Zakończenia</label>
+                <label for="dueDate">Data zakończenia</label>
                 <input class="task-input" type="date" id="dueDate" th:field="*{dueDate}">
             </div>
             <div class="task-field">
                 <label for="createdDate">Data Utworzenia</label>
-                <input class="task-input" type="date" id="createdDate" th:field="*{createdDate}" readonly>
+                <input class="task-input" type="date" id="createdDate" th:value="${#dates.format(projects.createdDate, 'yyyy-MM-dd')}" readonly>
             </div>
             <div class="task-field">
                 <label for="priority">Priorytet</label>
                 <select class="task-input" id="priority" th:field="*{priority}" required>
-                    <option value="1">Niski</option>
-                    <option value="2">Średni</option>
-                    <option value="3">Wysoki</option>
+                    <option value="1" th:selected="${projects.priority == 1}">Niski</option>
+                    <option value="2" th:selected="${projects.priority == 2}">Średni</option>
+                    <option value="3" th:selected="${projects.priority == 3}">Wysoki</option>
                 </select>
             </div>
             <div class="task-field">
-                <input  type="checkbox" class="form-check-input" id="completed" th:field="*{completed}">
-                <label for="completed">Ukończony</label>
+                <label for="completed">Ukończono</label>
+                <input type="checkbox" class="form-check-input" id="completed" th:field="*{completed}">
             </div>
-            <button type="submit" style="font-size: 20px" class="add-button">Utwórz</button>
+            <button type="submit" style="font-size: 20px" class="add-button">Zatwierdź</button>
         </form>
     </div>
 </div>
-<script>
-    document.getElementById('createdDate').valueAsDate = new Date();
-</script>
 <script src="/js/theme-switcher.js"></script>
 </body>
 </html>

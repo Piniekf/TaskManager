@@ -13,6 +13,9 @@
             <li>
                 <a th:href="@{/tasks/}">Zadania</a>
             </li>
+            <li>
+                <a th:href="@{/projects}">Projekty</a>
+            </li>
             <!-- Warunek, który ukrywa zakładkę "Użytkownicy" dla użytkowników z rolą "User" -->
             <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                 <a th:href="@{/users}">Użytkownicy</a>
@@ -123,3 +126,4 @@
 <script src="/js/theme-switcher.js"></script>
 </body>
 </html>
+

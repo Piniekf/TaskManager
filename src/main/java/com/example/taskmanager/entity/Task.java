@@ -25,9 +25,12 @@ public class Task {
     private java.sql.Date dueDate;
     @Min(1)
     @Max(3)
-    private int priority; // Dodana kolumna "priorytet"
-
+    private int priority;
     @ManyToOne
     @JoinColumn(name = "created_by_user_id")
     private User user;
+    // Projekty
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Projects project;
 }
