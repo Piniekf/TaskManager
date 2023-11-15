@@ -14,7 +14,7 @@
                 <a th:href="@{/tasks/}">Zadania</a>
             </li>
             <li>
-                <a th:href="@{/projects}">Projekty</a>
+                <a th:href="@{/projects/}">Projekty</a>
             </li>
             <!-- Warunek, który ukrywa zakładkę "Użytkownicy" dla użytkowników z rolą "User" -->
             <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
@@ -32,7 +32,7 @@
     </div>
     <div class="listname">
         Lista projektów
-        <a class="add-button" th:href="@{/projects/create}">+Dodaj</a>
+        <a class="add-button" th:href="@{/projects/create_project}">+Dodaj</a>
     </div>
     <form th:action="@{/projects/}" method="get">
         <label for="filterType">Wybierz rodzaj filtra:</label>
@@ -95,7 +95,7 @@
             <td class="no-wrap" th:text="${project.completed ? 'Tak' : 'Nie'}">Zakończony</td>
             <td th:text="${project.priority == 1 ? 'Niski' : (project.priority == 2 ? 'Średni' : 'Wysoki')}">Priorytet</td>
             <td>
-                <a class="edit-button" th:href="@{/projects/edit/{id}(id=${project.id})}">Edytuj</a>
+                <a class="edit-button" th:href="@{/projects/edit_project/{id}(id=${project.id})}">Edytuj</a>
                 <a class="del-button" th:href="@{/projects/delete/{id}(id=${project.id})}">Usuń</a>
             </td>
         </tr>

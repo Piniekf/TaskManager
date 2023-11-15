@@ -14,7 +14,7 @@
                 <a th:href="@{/tasks/}">Zadania</a>
             </li>
             <li>
-                <a th:href="@{/projects}">Projekty</a>
+                <a th:href="@{/projects/}">Projekty</a>
             </li>
             <!-- Warunek, który ukrywa zakładkę "Użytkownicy" dla użytkowników z rolą "User" -->
             <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
@@ -32,7 +32,7 @@
     </div>
     <div class="task-panel">
         <h2>Utwórz Nowy Projekt</h2>
-        <form th:object="${projects}" method="post" th:action="@{/projects/save}">
+        <form th:object="${projects}" method="post" th:action="@{/projects/}">
             <div class="task-field">
                 <label for="projectName">Nazwa</label>
                 <input class="task-input" type="text" id="projectName" th:field="*{projectName}" placeholder="Enter Project Name" required>
@@ -51,7 +51,7 @@
             </div>
             <div class="task-field">
                 <label for="createdDate">Data Utworzenia</label>
-                <input class="task-input" type="date" id="createdDate" th:value="${#dates.format(projects.createdDate, 'yyyy-MM-dd')}" readonly>
+                <input class="task-input" type="date" id="createdDate" th:field="*{createdDate}" readonly>
             </div>
             <div class="task-field">
                 <label for="priority">Priorytet</label>
