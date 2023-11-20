@@ -123,19 +123,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public void blockUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            user.setIsActivated(false);
+            userRepository.save(user);
+        }
     }
 
     @Override
-    public void deleteUser(Long id) {
-        User user = userRepository.findById(id).orElse(null);
+    public void unblockUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
         if (user != null) {
-            // Usunięcie przypisanych ról
-            user.setRoles(Collections.emptyList()); // Usuwamy przypisane role
-            userRepository.save(user); // Zapisujemy użytkownika bez ról
-            userRepository.deleteById(id);
+            user.setIsActivated(true);
+            userRepository.save(user);
         }
     }
+
 
 }

@@ -70,10 +70,23 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/users/delete/{userId}")
-    public String deleteUser(@PathVariable Long userId) {
-        User user = userService.findUserById(userId);
-        userService.deleteUser(userId);
+    @GetMapping("/users/block/{email}")
+    public String blockUser(@PathVariable String email) {
+        User user = userService.findUserByEmail(email);
+        if (user != null) {
+            userService.blockUserByEmail(user.getEmail());
+        }
         return "redirect:/users/";
     }
+
+    @GetMapping("/users/unblock/{email}")
+    public String unblockUser(@PathVariable String email) {
+        User user = userService.findUserByEmail(email);
+        if (user != null) {
+            userService.unblockUserByEmail(user.getEmail());
+        }
+        return "redirect:/users/";
+    }
+
+
 }

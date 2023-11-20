@@ -20,8 +20,7 @@ public interface UserService {
 
     boolean isActivationTokenValid(String token);
 
-    User findUserById(Long id);
+    void blockUserByEmail(String email);
 
-    void deleteUser(Long id);
-
+    void unblockUserByEmail(String email);
 }
