@@ -1,17 +1,15 @@
 package com.example.taskmanager.controller;
 
-import jakarta.validation.Valid;
 import com.example.taskmanager.dto.UserDto;
 import com.example.taskmanager.entity.User;
 import com.example.taskmanager.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
@@ -61,7 +59,7 @@ public class AuthController {
 
         return "/login";
     }
-    @GetMapping("/users")
+    @GetMapping("/users/")
     public String users(Model model){
         List<UserDto> users = userService.findAllUsers();
         model.addAttribute("users", users);
@@ -72,4 +70,10 @@ public class AuthController {
         return "login";
     }
 
+    @GetMapping("/users/delete/{userId}")
+    public String deleteUser(@PathVariable Long userId) {
+        User user = userService.findUserById(userId);
+        userService.deleteUser(userId);
+        return "redirect:/users/";
+    }
 }

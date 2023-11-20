@@ -20,4 +20,8 @@ public interface UserService {
 
     boolean isActivationTokenValid(String token);
 
+    User findUserById(Long id);
+
+    void deleteUser(Long id);
+
 }

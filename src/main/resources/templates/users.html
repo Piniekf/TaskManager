@@ -18,7 +18,7 @@
             </li>
             <!-- Warunek, który ukrywa zakładkę "Użytkownicy" dla użytkowników z rolą "User" -->
             <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                <a th:href="@{/users}">Użytkownicy</a>
+                <a th:href="@{/users/}">Użytkownicy</a>
             </li>
             <li>
                 <a th:href="@{/logout}">Wyloguj</a>
@@ -46,7 +46,7 @@
             <td th:text="${user.lastName}"></td>
             <td th:text="${user.email}"></td>
             <td>
-                <a class="del-button" th:href="@{/users/delete/{id}(id=${user.id})}">Usuń</a>
+                <a class="del-button" th:href="@{'/users/delete/' + ${user.id}}">Usuń</a>
             </td>
         </tr>
         </tbody>

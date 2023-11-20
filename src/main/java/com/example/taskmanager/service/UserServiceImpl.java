@@ -1,6 +1,6 @@
 package com.example.taskmanager.service;
 
-import com.example.taskmanager.dto.UserDto; // Import UserDto
+import com.example.taskmanager.dto.UserDto;
 import com.example.taskmanager.entity.Role;
 import com.example.taskmanager.entity.User;
 import com.example.taskmanager.repository.RoleRepository;
@@ -121,4 +121,21 @@ public class UserServiceImpl implements UserService {
         mailMessage.setText("Kliknij w link, aby aktywować swoje konto: http://localhost:8080/activate?token=" + activationToken);
         javaMailSender.send(mailMessage);
     }
+
+    @Override
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            // Usunięcie przypisanych ról
+            user.setRoles(Collections.emptyList()); // Usuwamy przypisane role
+            userRepository.save(user); // Zapisujemy użytkownika bez ról
+            userRepository.deleteById(id);
+        }
+    }
+
 }
