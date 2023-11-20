@@ -39,13 +39,24 @@ public class AuthController {
                     "Istnieje już konto z tym adresem e-mail");
         }
 
-        if(result.hasErrors()){
+        // Sprawdź błędy walidacji hasła
+        if(result.hasErrors()) {
             model.addAttribute("user", userDto);
             return "/register";
         }
+
+        // Sprawdź walidację hasła
+        if (!isPasswordValid(userDto.getPassword())) {
+            result.rejectValue("password", null,
+                    "Hasło musi mieć co najmniej 8 znaków, zawierać co najmniej jedną małą literę, jedną wielką literę, jedną cyfrę i jeden znak specjalny.");
+            model.addAttribute("user", userDto);
+            return "/register";
+        }
+
         userService.saveUser(userDto);
         return "redirect:/register?success";
     }
+
     @GetMapping("/activate")
     public String activateAccount(@RequestParam String token) {
         User user = userService.findUserByActivationToken(token);
@@ -87,6 +98,10 @@ public class AuthController {
         }
         return "redirect:/users/";
     }
-
+    private boolean isPasswordValid(String password) {
+        // Wymagania: co najmniej 8 znaków, przynajmniej jedna mała litera, jedna wielka litera, jedna cyfra i jeden znak specjalny
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,32}$";
+        return password.matches(regex);
+    }
 
 }
