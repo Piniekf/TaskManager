@@ -68,6 +68,10 @@ public class ProjectsController {
     @GetMapping("/edit_project/{id}")
     public String showEditProjectForm(@PathVariable Long id, Model model) {
         Projects projects = projectsService.findProjectById(id);
+        // Sprawdzenie czy aktualnie zalogowany użytkownik jest właścicielem projektu
+        if (!isCurrentUserOwner(projects)) {
+            return "redirect:/projects/";
+        }
         List<Task> allTasks = taskService.getAllTask();
         model.addAttribute("projects", projects);
         model.addAttribute("allTasks", allTasks);
@@ -78,6 +82,10 @@ public class ProjectsController {
     public String updateProject(@PathVariable Long id, @ModelAttribute Projects projects,
                                 @RequestParam(name = "selectedTasks", required = false) List<Long> selectedTasks) {
         Projects existingProject = projectsService.findProjectById(id);
+        // Sprawdzenie czy aktualnie zalogowany użytkownik jest właścicielem projektu
+        if (!isCurrentUserOwner(existingProject)) {
+            return "redirect:/projects/";
+        }
         existingProject.setProjectName(projects.getProjectName());
         existingProject.setProjectDescription(projects.getProjectDescription());
         existingProject.setDueDate(projects.getDueDate());
@@ -96,7 +104,17 @@ public class ProjectsController {
 
     @GetMapping("/delete/{id}")
     public String deleteProject(@PathVariable Long id) {
-        projectsService.deleteProject(id);
+        Projects project = projectsService.findProjectById(id);
+        // Sprawdzenie czy aktualnie zalogowany użytkownik jest właścicielem projektu
+        if (isCurrentUserOwner(project)) {
+            projectsService.deleteProject(id);
+        }
         return "redirect:/projects/";
+    }
+    // Metoda pomocnicza sprawdzająca, czy aktualnie zalogowany użytkownik jest właścicielem projektu
+    private boolean isCurrentUserOwner(Projects project) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userService.findUserByEmail(userDetails.getUsername());
+        return project.getUser().getId().equals(currentUser.getId());
     }
 }

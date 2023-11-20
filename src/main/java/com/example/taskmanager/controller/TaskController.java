@@ -59,6 +59,9 @@ public class TaskController {
     @GetMapping("/edit/{id}")
     public String showEditTaskForm(@PathVariable Long id, Model model) {
         Task task = taskService.findTaskById(id);
+        if (!isCurrentUserOwner(task)) {
+            return "redirect:/tasks/";
+        }
         model.addAttribute("task", task);
         return "edit";
     }
@@ -66,6 +69,10 @@ public class TaskController {
     @PostMapping("/update/{id}")
     public String updateTask(@PathVariable Long id, @ModelAttribute Task task) {
         Task existingTask = taskService.findTaskById(id);
+        // Sprawdzenie czy aktualnie zalogowany użytkownik jest właścicielem zadania, jeśli nie jest to przekieruje go z powrotem
+        if (!isCurrentUserOwner(existingTask)) {
+            return "redirect:/tasks/";
+        }
         existingTask.setTaskName(task.getTaskName());
         existingTask.setTaskDescription(task.getTaskDescription());
         existingTask.setDueDate(task.getDueDate());
@@ -78,7 +85,18 @@ public class TaskController {
 
     @GetMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
+        Task task = taskService.findTaskById(id);
+        // Sprawdzenie czy aktualnie zalogowany użytkownik jest właścicielem zadania
+        if (isCurrentUserOwner(task)) {
+            taskService.deleteTask(id);
+        }
         return "redirect:/tasks/";
+    }
+
+    // Metoda pomocnicza sprawdzająca, czy aktualnie zalogowany użytkownik jest właścicielem zadania
+    private boolean isCurrentUserOwner(Task task) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userService.findUserByEmail(userDetails.getUsername());
+        return task.getUser().getId().equals(currentUser.getId());
     }
 }
