@@ -60,7 +60,11 @@
             <div class="task-field">
                 <label for="selectedTasks">Wybierz Zadania</label>
                 <select multiple class="task-input" id="selectedTasks" th:field="*{task}">
-                    <option th:each="task : ${allTasks}" th:value="${task.id}" th:text="${task.taskName}" th:selected="${projects.task != null && projects.task.contains(task)}"></option>
+                    <option th:each="task : ${allTasks}"
+                            th:if="${task.user.email == #authentication.principal.username}"
+                            th:value="${task.id}"
+                            th:text="${task.taskName}"
+                            th:selected="${projects.task != null and projects.task.contains(task)}"></option>
                 </select>
             </div>
             <div class="task-field">
