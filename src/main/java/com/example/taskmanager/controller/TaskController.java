@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -44,46 +44,48 @@ public class TaskController {
     }
 
     @PostMapping("/")
-    public String createTask(@ModelAttribute Task task) throws IOException {
-        // Pobierz zalogowanego użytkownika
+    public String createTask(@ModelAttribute Task task){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // Użyj serwisu użytkowników do znalezienia użytkownika na podstawie email
         User currentUser = userService.findUserByEmail(userDetails.getUsername());
-
-        // Przypisz zalogowanego użytkownika do nowego zadania
         task.setUser(currentUser);
-
-        // Zapisz zadanie do bazy danych
         taskService.createNewTask(task);
-
-        // Stwórz plik ICS z informacjami o zadaniu
-        String icsContent = generateICSContent(task);
-        saveICSFile(icsContent, task.getTaskName() + ".ics");
-
         return "redirect:/tasks/";
     }
 
-    private String generateICSContent(Task task) {
+    @GetMapping("/download/{id}")
+    public void downloadICSFile(@PathVariable Long id, HttpServletResponse response) {
+        Task task = taskService.findTaskById(id);
+        if (isCurrentUserOwner(task)) {
+            try {
+                String icsContent = generateICSContent(task);
 
+                // Ustawienie nagłówków HTTP dla pobierania pliku
+                response.setContentType("text/calendar");
+                response.setHeader("Content-Disposition", "attachment; filename=" + task.getTaskName() + ".ics");
+
+                // Pobranie OutputStream z HttpServletResponse
+                try (ServletOutputStream outputStream = response.getOutputStream()) {
+                    // Zapisanie zawartości pliku do OutputStream
+                    outputStream.write(icsContent.getBytes());
+                    outputStream.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace(); // Możesz obsłużyć błąd w odpowiedni sposób
+            }
+        }
+    }
+
+    private String generateICSContent(Task task) {
         return "BEGIN:VCALENDAR\n" +
                 "VERSION:2.0\n" +
-                // Detale taska
                 "BEGIN:VEVENT\n" +
-                "UID:" + task.getId() + "@example.com\n" +
+                "UID:" + task.getId() + "\n" +
                 "SUMMARY:" + task.getTaskName() + "\n" +
                 "DESCRIPTION:" + task.getTaskDescription() + "\n" +
                 "DTEND:" + task.getDueDate() + "\n" +
                 "END:VEVENT\n" +
                 "END:VCALENDAR\n";
     }
-
-    private void saveICSFile(String icsContent, String filename) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(icsContent);
-        }
-    }
-
 
     @GetMapping("/edit/{id}")
     public String showEditTaskForm(@PathVariable Long id, Model model) {
@@ -98,7 +100,6 @@ public class TaskController {
     @PostMapping("/update/{id}")
     public String updateTask(@PathVariable Long id, @ModelAttribute Task task) {
         Task existingTask = taskService.findTaskById(id);
-        // Sprawdzenie czy aktualnie zalogowany użytkownik jest właścicielem zadania, jeśli nie jest to przekieruje go z powrotem
         if (!isCurrentUserOwner(existingTask)) {
             return "redirect:/tasks/";
         }
@@ -115,19 +116,15 @@ public class TaskController {
     @GetMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
         Task task = taskService.findTaskById(id);
-        // Sprawdzenie czy aktualnie zalogowany użytkownik jest właścicielem zadania
         if (isCurrentUserOwner(task)) {
             taskService.deleteTask(id);
         }
         return "redirect:/tasks/";
     }
 
-    // Metoda pomocnicza sprawdzająca, czy aktualnie zalogowany użytkownik jest właścicielem zadania
     private boolean isCurrentUserOwner(Task task) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = userService.findUserByEmail(userDetails.getUsername());
         return task.getUser().getId().equals(currentUser.getId());
     }
-
-
 }
