@@ -1,15 +1,19 @@
 package com.example.taskmanager.controller;
+
+import com.example.taskmanager.entity.Task;
+import com.example.taskmanager.entity.User;
+import com.example.taskmanager.service.TaskService;
+import com.example.taskmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.example.taskmanager.entity.Task;
-import com.example.taskmanager.entity.User;
-import com.example.taskmanager.service.TaskService;
-import com.example.taskmanager.service.UserService;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -40,7 +44,7 @@ public class TaskController {
     }
 
     @PostMapping("/")
-    public String createTask(@ModelAttribute Task task) {
+    public String createTask(@ModelAttribute Task task) throws IOException {
         // Pobierz zalogowanego użytkownika
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -53,8 +57,33 @@ public class TaskController {
         // Zapisz zadanie do bazy danych
         taskService.createNewTask(task);
 
+        // Stwórz plik ICS z informacjami o zadaniu
+        String icsContent = generateICSContent(task);
+        saveICSFile(icsContent, task.getTaskName() + ".ics");
+
         return "redirect:/tasks/";
     }
+
+    private String generateICSContent(Task task) {
+
+        return "BEGIN:VCALENDAR\n" +
+                "VERSION:2.0\n" +
+                // Detale taska
+                "BEGIN:VEVENT\n" +
+                "UID:" + task.getId() + "@example.com\n" +
+                "SUMMARY:" + task.getTaskName() + "\n" +
+                "DESCRIPTION:" + task.getTaskDescription() + "\n" +
+                "DTEND:" + task.getDueDate() + "\n" +
+                "END:VEVENT\n" +
+                "END:VCALENDAR\n";
+    }
+
+    private void saveICSFile(String icsContent, String filename) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write(icsContent);
+        }
+    }
+
 
     @GetMapping("/edit/{id}")
     public String showEditTaskForm(@PathVariable Long id, Model model) {
@@ -99,4 +128,6 @@ public class TaskController {
         User currentUser = userService.findUserByEmail(userDetails.getUsername());
         return task.getUser().getId().equals(currentUser.getId());
     }
+
+
 }
