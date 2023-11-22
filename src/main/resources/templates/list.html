@@ -27,8 +27,9 @@
     </nav>
 </div>
 <div class="content">
-    <div class="theme-button"><button id="theme-button" class="add-button" onclick="toggleCSS()">Ciemny motyw</button>
+    <div class="theme-button"><button id="theme-button" class="login-button" onclick="toggleCSS()">Ciemny motyw</button>
     </div>
+
     <div class="listname">
         Lista zadań
         <a class="add-button" th:href="@{/tasks/create}">+Dodaj</a>
@@ -101,7 +102,7 @@
                     <td>
                         <a class="edit-button" th:href="@{/tasks/edit/{id}(id=${task.id})}">Edytuj</a>
                         <a class="del-button" th:href="@{/tasks/delete/{id}(id=${task.id})}">Usuń</a>
-                        <a class="download-button" th:href="@{/tasks/download/{id}(id=${task.id})}">Pobierz (.ics)</a>
+                        <a class="add-button" th:href="@{/tasks/download/{id}(id=${task.id})}">Pobierz (.ics)</a>
                     </td>
                 </tr>
             </th:block>

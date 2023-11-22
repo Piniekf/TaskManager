@@ -169,3 +169,16 @@ input::placeholder{
     top:10px;
     right: 10px;
 }
+.login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #c2c2c2;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #8c8c8c;
+}
