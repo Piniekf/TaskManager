@@ -45,9 +45,9 @@
             <td th:text="${user.firstName}"></td>
             <td th:text="${user.lastName}"></td>
             <td th:text="${user.email}"></td>
-            <td>
-                <a class="block-button" th:href="@{/users/block/{email}(email=${user.email})}">Zablokuj</a>
-                <a class="unblock-button" th:href="@{/users/unblock/{email}(email=${user.email})}">Odblokuj</a>
+            <td class="wrap-content">
+                <a class="del-button" th:href="@{/users/block/{email}(email=${user.email})}">Zablokuj</a>
+                <a class="add-button" th:href="@{/users/unblock/{email}(email=${user.email})}">Odblokuj</a>
             </td>
         </tr>
         </tbody>

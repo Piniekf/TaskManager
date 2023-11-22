@@ -38,11 +38,11 @@
             </div>
             <div class="task-field">
                 <label for="taskDescription">Opis</label>
-                <textarea class="task-input" id="taskDescription" th:field="*{taskDescription}" placeholder="Enter Task Description"></textarea>
+                <textarea class="task-input" id="taskDescription" th:field="*{taskDescription}" placeholder="Enter Task Description" required></textarea>
             </div>
             <div class="task-field">
                 <label for="dueDate">Data Zakończenia</label>
-                <input class="task-input" type="date" id="dueDate" th:field="*{dueDate}">
+                <input class="task-input" type="date" id="dueDate" th:field="*{dueDate}" required>
             </div>
             <div class="task-field">
                 <label for="createdDate">Data Utworzenia</label>

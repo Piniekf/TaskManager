@@ -93,4 +93,7 @@ a:hover {
     top:10px;
     right: 10px;
 }
-
+.wrap-content {
+    word-wrap: break-word;
+    white-space: normal;
+}
