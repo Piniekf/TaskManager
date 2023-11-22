@@ -33,6 +33,9 @@
         Lista zadań
         <a class="add-button" th:href="@{/tasks/create}">+Dodaj</a>
     </div>
+    <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        <a class="export-button" th:href="@{/tasks/export/excel}">Wygeneruj raport</a>
+    </div>
     <form th:action="@{/tasks/}" method="get">
         <label for="filterType">Wybierz rodzaj filtra:</label>
         <select class="task-input" name="filterType" id="filterType">

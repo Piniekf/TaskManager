@@ -14,11 +14,11 @@ import java.util.List;
 
 
 @Controller
-public class AuthController {
+public class UserController {
     @Autowired
     private UserService userService;
 
-    public AuthController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
