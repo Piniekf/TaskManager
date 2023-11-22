@@ -182,3 +182,18 @@ input::placeholder{
 .login-button:hover {
     background-color: #8c8c8c;
 }
+.export-button{
+    position: absolute;
+    bottom:10px;
+    right: 10px;
+    padding: 4px;
+    background-color: #c2c2c2;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.export-button:hover{
+    background-color: #8c8c8c;
+}
