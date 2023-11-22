@@ -74,7 +74,7 @@ public class TaskController {
                     outputStream.flush();
                 }
             } catch (IOException e) {
-                e.printStackTrace(); // Możesz obsłużyć błąd w odpowiedni sposób
+                e.printStackTrace();
             }
         }
     }
