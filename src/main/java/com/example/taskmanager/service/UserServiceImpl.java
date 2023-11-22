@@ -19,9 +19,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JavaMailSender javaMailSender;
     private static final int TOKEN_EXPIRATION_MINUTES = 10; // Ważność tokenu
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
@@ -44,8 +44,6 @@ public class UserServiceImpl implements UserService {
         user.setIsActivatedToken(activationToken);
         user.setIsActivatedExpiryDate(tokenExpiryDate);
         sendActivationEmail(user.getEmail(), user.isActivatedToken);
-
-
         Role role = roleRepository.findByName("ROLE_USER");
         if (role == null) {
             role = createDefaultUserRole();
@@ -121,6 +119,22 @@ public class UserServiceImpl implements UserService {
         mailMessage.setText("Kliknij w link, aby aktywować swoje konto: http://localhost:8080/activate?token=" + activationToken);
         javaMailSender.send(mailMessage);
     }
+    private void sendBlockEmail(String email) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("taskmanagerautomat@gmail.com");
+        mailMessage.setTo(email);
+        mailMessage.setSubject("TaskManager - Twoje konto zostało zablokowane!");
+        mailMessage.setText("Twoje konto zostało zablokowane, jeśli to pomyłka, skontaktuj się z administratorem.");
+        javaMailSender.send(mailMessage);
+    }
+    private void sendUnblockEmail(String email) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("taskmanagerautomat@gmail.com");
+        mailMessage.setTo(email);
+        mailMessage.setSubject("TaskManager - Twoje konto zostało odblokowane!");
+        mailMessage.setText("Twoje konto zostało odblokowane przez administratora.");
+        javaMailSender.send(mailMessage);
+    }
 
     @Override
     public void blockUserByEmail(String email) {
@@ -128,6 +142,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             user.setIsActivated(false);
             userRepository.save(user);
+            sendBlockEmail(email);
         }
     }
 
@@ -137,6 +152,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             user.setIsActivated(true);
             userRepository.save(user);
+            sendUnblockEmail(email);
         }
     }
 
