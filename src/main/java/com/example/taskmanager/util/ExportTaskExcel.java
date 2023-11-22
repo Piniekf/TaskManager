@@ -11,7 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.IOException;
-import java.sql.Date; // Dodano import
+import java.sql.Date;
 import java.util.List;
 
 public class ExportTaskExcel {
@@ -35,10 +35,11 @@ public class ExportTaskExcel {
         style.setFont(font);
 
         createCell(row, 0, "ID zadania", style);
-        createCell(row, 1, "Właściciel zadania", style);
-        createCell(row, 2, "Nazwa zadania", style);
-        createCell(row, 3, "Opis zadania", style);
-        createCell(row, 4, "Priorytet zadania", style);
+        createCell(row, 1, "ID właściciela zadania", style);
+        createCell(row, 2, "Właściciel zadania", style);
+        createCell(row, 3, "Nazwa zadania", style);
+        createCell(row, 4, "Opis zadania", style);
+        createCell(row, 5, "Priorytet zadania", style);
     }
 
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
@@ -71,6 +72,7 @@ public class ExportTaskExcel {
             int columnCount = 0;
 
             createCell(row, columnCount++, task.getId(), style);
+            createCell(row, columnCount++, task.getUser().getId(), style);
             createCell(row, columnCount++, task.getUser().getEmail(), style);
             createCell(row, columnCount++, task.getTaskName(), style);
             createCell(row, columnCount++, task.getTaskDescription(), style);
@@ -81,11 +83,10 @@ public class ExportTaskExcel {
     public void export(HttpServletResponse response) throws IOException {
         writeHeaderLine();
         writeDataLines();
-
         ServletOutputStream outputStream = response.getOutputStream();
         workbook.write(outputStream);
         workbook.close();
-
         outputStream.close();
     }
+
 }

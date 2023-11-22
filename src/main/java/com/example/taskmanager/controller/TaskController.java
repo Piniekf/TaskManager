@@ -139,7 +139,7 @@ public class TaskController {
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=tasks_" + currentDateTime + ".xlsx";
+        String headerValue = "attachment; filename=zadania_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
         List<Task> listTask = taskService.getAllTask();
