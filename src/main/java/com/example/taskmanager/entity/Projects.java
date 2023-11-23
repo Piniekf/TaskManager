@@ -3,8 +3,9 @@ package com.example.taskmanager.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import java.util.List;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -32,4 +33,6 @@ public class Projects {
     private User user;
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Task> task;
+    @Transient
+    private List<Long> selectedTasks;
 }

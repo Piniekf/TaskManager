@@ -59,7 +59,7 @@
             </div>
             <div class="task-field">
                 <label for="selectedTasks">Wybierz Zadania</label>
-                <select multiple class="task-input" id="selectedTasks" th:field="*{task}">
+                <select multiple class="task-input" id="selectedTasks" th:field="*{selectedTasks}">
                     <option th:each="task : ${allTasks}"
                             th:if="${task.user.email == #authentication.principal.username}"
                             th:value="${task.id}"

@@ -57,6 +57,11 @@ public class ProjectsController {
 
         if (selectedTasks != null) {
             List<Task> tasks = taskService.getTasksByIds(selectedTasks);
+
+            for (Task task : tasks) {
+                task.setProject(projects);
+            }
+
             projects.setTask(tasks);
         }
 
@@ -94,6 +99,9 @@ public class ProjectsController {
 
         if (selectedTasks != null) {
             List<Task> tasks = taskService.getTasksByIds(selectedTasks);
+            for (Task task : tasks) {
+                task.setProject(existingProject);
+            }
             existingProject.setTask(tasks);
         }
 
@@ -111,6 +119,7 @@ public class ProjectsController {
         }
         return "redirect:/projects/";
     }
+
     // Metoda pomocnicza sprawdzająca, czy aktualnie zalogowany użytkownik jest właścicielem projektu
     private boolean isCurrentUserOwner(Projects project) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -118,3 +127,4 @@ public class ProjectsController {
         return project.getUser().getId().equals(currentUser.getId());
     }
 }
+
