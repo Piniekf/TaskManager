@@ -33,4 +33,6 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Projects project;
+    @Column(name = "shared_with_email")
+    private String sharedWithEmail;
 }

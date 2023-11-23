@@ -89,7 +89,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="project : ${projects}" th:if="${project.user.email == #authentication.principal.username}">
+        <tr th:each="project : ${projects}" th:if="${project.user.email == #authentication.name}">
             <td th:text="${project.projectName}">Nazwa projektu</td>
             <td th:text="${project.projectDescription}">Opis projektu</td>
             <td class="no-wrap" th:text="${#dates.format(project.createdDate, 'yyyy-MM-dd')}">Data utworzenia</td>

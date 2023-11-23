@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,18 +49,21 @@ public class TaskController {
     }
 
     @PostMapping("/")
-    public String createTask(@ModelAttribute Task task){
+    public String createTask(@ModelAttribute Task task, @RequestParam(name = "sharedWithEmail", required = false) String sharedWithEmail) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = userService.findUserByEmail(userDetails.getUsername());
         task.setUser(currentUser);
+        task.setSharedWithEmail(sharedWithEmail);
         taskService.createNewTask(task);
         return "redirect:/tasks/";
     }
 
     @GetMapping("/download/{id}")
-    public void downloadICSFile(@PathVariable Long id, HttpServletResponse response) {
+    public void downloadICSFile(@PathVariable Long id, HttpServletResponse response, Principal principal) {
         Task task = taskService.findTaskById(id);
-        if (isCurrentUserOwner(task)) {
+
+        // Sprawdza, czy bieżący użytkownik jest właścicielem zadania lub ma dostęp przez shared_with_email
+        if (isCurrentUserOwner(task) || isCurrentUserSharedWithEmail(task, principal)) {
             try {
                 String icsContent = generateICSContent(task);
 
@@ -102,7 +106,7 @@ public class TaskController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateTask(@PathVariable Long id, @ModelAttribute Task task) {
+    public String updateTask(@PathVariable Long id, @ModelAttribute Task task, @RequestParam(name = "sharedWithEmail", required = false) String sharedWithEmail) {
         Task existingTask = taskService.findTaskById(id);
         if (!isCurrentUserOwner(existingTask)) {
             return "redirect:/tasks/";
@@ -113,6 +117,7 @@ public class TaskController {
         existingTask.setCreatedDate(existingTask.getCreatedDate());
         existingTask.setCompleted(task.isCompleted());
         existingTask.setPriority(task.getPriority());
+        existingTask.setSharedWithEmail(sharedWithEmail);
         taskService.updateTask(existingTask);
         return "redirect:/tasks/";
     }
@@ -132,6 +137,14 @@ public class TaskController {
         return task.getUser().getId().equals(currentUser.getId());
     }
 
+    // Metoda sprawdzająca, czy bieżący użytkownik ma dostęp do zadania przez shared_with_email
+    private boolean isCurrentUserSharedWithEmail(Task task, Principal principal) {
+        String currentUserEmail = principal.getName();
+        String sharedWithEmail = task.getSharedWithEmail();
+
+        return sharedWithEmail != null && sharedWithEmail.equals(currentUserEmail);
+    }
+
     @GetMapping("/export/excel")
     public void exportToExcel(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
@@ -148,4 +161,5 @@ public class TaskController {
 
         excelExporter.export(response);
     }
+
 }
