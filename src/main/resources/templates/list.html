@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/tasks_style_light.css}" id="theme-stylesheet">
 </head>
 <body>
+<div class="theme-button"><button id="theme-button" class="login-button" onclick="toggleCSS()">Zmień motyw</button>
+</div>
 <div class="sidebar">
     <nav>
         <a th:href="@{/tasks/}"><img src="/png/logo-2-white.png" alt="Logo" style="height: 180px;"/></a>
@@ -27,8 +29,7 @@
     </nav>
 </div>
 <div class="content">
-    <div class="theme-button"><button id="theme-button" class="login-button" onclick="toggleCSS()">Ciemny motyw</button>
-    </div>
+
 
     <div class="listname">
         Lista zadań

@@ -27,7 +27,7 @@
     </nav>
 </div>
 <div class="content">
-    <div class="theme-button"><button id="theme-button" class="add-button" onclick="toggleCSS()">Ciemny motyw</button>
+    <div class="theme-button"><button id="theme-button" class="add-button" onclick="toggleCSS()">Zmień motyws</button>
     </div>
     <div class="task-panel">
         <h2>Utwórz Nowe Zadanie</h2>
@@ -60,9 +60,9 @@
                 <input  type="checkbox" class="form-check-input" id="completed" th:field="*{completed}">
                 <label for="completed">Ukończony</label>
             </div>
-            <div class="form-group">
+            <div class="task-field">
                 <label for="sharedWithEmail">Shared with Email:</label>
-                <input type="text" class="form-control" id="sharedWithEmail" name="sharedWithEmail" placeholder="Enter email">
+                <input type="text" class="task-input" id="sharedWithEmail" name="sharedWithEmail" placeholder="Podaj email">
             </div>
             <button type="submit" style="font-size: 20px" class="add-button">Utwórz</button>
         </form>
