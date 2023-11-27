@@ -53,7 +53,7 @@ public class User implements Serializable {
     // Do resetowania hasła
     private String resetPasswordToken;
     private Date resetPasswordTokenExpiryDate;
-    public User(String name, String email, String password) { // To jest napisane dla tokena, trzeba by to chyba potem poprawić bo jest bez sensu w sumie ale działa
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;

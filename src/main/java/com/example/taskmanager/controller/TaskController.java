@@ -4,7 +4,7 @@ import com.example.taskmanager.entity.Task;
 import com.example.taskmanager.entity.User;
 import com.example.taskmanager.service.TaskService;
 import com.example.taskmanager.service.UserService;
-import com.example.taskmanager.util.ExportTaskExcel;
+import com.example.taskmanager.util.ExportTaskPdf;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,21 +145,22 @@ public class TaskController {
         return sharedWithEmail != null && sharedWithEmail.equals(currentUserEmail);
     }
 
-    @GetMapping("/export/excel")
-    public void exportToExcel(HttpServletResponse response) throws IOException {
-        response.setContentType("application/octet-stream");
+    @GetMapping("/export/pdf")
+    public void exportToPdf(HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=zadania_" + currentDateTime + ".xlsx";
+        String headerValue = "attachment; filename=zadania_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
         List<Task> listTask = taskService.getAllTask();
 
-        ExportTaskExcel excelExporter = new ExportTaskExcel(listTask);
+        ExportTaskPdf pdfExporter = new ExportTaskPdf(listTask);
 
-        excelExporter.export(response);
+        pdfExporter.export(response);
     }
+
 
 }
